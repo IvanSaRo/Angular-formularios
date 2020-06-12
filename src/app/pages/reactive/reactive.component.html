@@ -1,0 +1,184 @@
+<h4>Formularios <small> reactivos </small></h4>
+<hr />
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="save()">
+  <div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Nombre"
+          formControlName="name"
+          [class.is-invalid]="invalidName"
+        />
+        <small *ngIf="invalidName" class="text-danger"
+          >El nombre ha de tener al menos 2 letras</small
+        >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Apellido"
+          formControlName="surname"
+          [class.is-invalid]="invalidSurname"
+        />
+        <small *ngIf="invalidSurname" class="text-danger"
+          >El apellido ha de tener al menos 2 letras</small
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col">
+      <input
+        class="form-control"
+          type="email"
+        placeholder="Correo electrónico"
+        formControlName="email"
+        [class.is-invalid]="invalidEmail"
+      />
+      <small *ngIf="invalidEmail" class="text-danger"
+        >El email introducido no es correcto</small
+      >
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Usuario</label>
+    <div class="col">
+      <input
+        class="form-control"
+          type="text"
+        placeholder="Ivan está cogido"
+        formControlName="user"
+        [class.is-invalid]="invalidUser"
+      />
+      <small *ngIf="invalidUser" class="text-danger"
+        >Usuario en uso</small
+      >
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Contraseña</label>
+    <div class="col">
+      <input
+        class="form-control"
+        type="password"
+        placeholder="Contraseña"
+        formControlName="password1"
+        [class.is-invalid]="invalidPassword1"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Repita contraseña</label>
+    <div class="col">
+      <input
+        class="form-control"
+        type="password"
+        placeholder="Repita contraseña"
+        formControlName="password2"
+        [class.is-invalid]="invalidPassword2"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row" formGroupName="address">
+    <label class="col-2 col-form-label">Dirección</label>
+    <div class="form-row col">
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="CCAA"
+          formControlName="district"
+          [class.is-invalid]="invalidDistrict"
+        />
+        <small *ngIf="invalidDistrict" class="text-danger"
+          >La información no es correcta</small
+        >
+      </div>
+
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Ciudad"
+          formControlName="city"
+          [class.is-invalid]="invalidCity"
+        />
+        <small *ngIf="invalidCity" class="text-danger"
+          >La información no es correcta</small
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th>ID</th>
+            <th>Hobby</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="hobbies">
+          <tr *ngFor="let control of hobbiesArray.controls; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+              <input type="text" class="form-control" [formControlName]="i" />
+            </td>
+            <td>
+              <button
+                class="btn btn-danger"
+                type="button"
+                (click)="removeHobby(i)"
+              >
+                Borrar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        class="btn btn-primary mt-3 mb-5 btn-block"
+        type="button"
+        (click)="addHobby()"
+      >
+        Agregar
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col">
+      <button type="submit" class="btn btn-outline-primary btn-block">
+        Guardar
+      </button>
+    </div>
+  </div>
+</form>
+
+<hr />
+<pre>
+  Estado del formulario: {{form.valid}}
+  <br>
+  Status: {{form.status}}
+</pre>
+
+<pre>
+  {{ form.value | json }}
+</pre>
